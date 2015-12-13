@@ -1,3 +1,9 @@
+# How to run
+# $ sudo $VIRTUAL_ENV/bin/python3 pi_head_tracker.py -c conf.json
+# sudo is needed for GPIO library to work
+# $VIRTUAL_ENV is the path to the virtual environment used, cv3 in this case
+# path is to the specific python3 package used in this virtual env 
+
 # Import the necessary packages
 import argparse
 import warnings
@@ -6,8 +12,15 @@ import imutils
 import json
 import time
 import cv2
- 
+import RPi.GPIO as GPIO
+
 from motion_detection import *
+
+# setup GPIO
+ledPin = 21
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(ledPin, GPIO.OUT)
+GPIO.output(ledPin, False)
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -66,6 +79,7 @@ while True:
   # the timestamp and occupied/unoccupied text
   timestamp = datetime.datetime.now()
   text = "Unoccupied"
+  GPIO.output(ledPin, False)
  
   # Add the motion detectino algorithm here
   [frame, text, avg] = motion_detection(frame, avg, text, conf, timestamp)
