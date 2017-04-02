@@ -16,17 +16,17 @@ class easy_driver_v4p4:
     GPIO.output(ms1_pin, False)
     GPIO.setup(ms2_pin, GPIO.OUT)
     GPIO.output(ms2_pin, False)
-    self.delayTiem = delayTime
+    self.delayTime = delay_time
 
-  def goforward()
+  def goforward():
     GPIO.output(dir_pin, True)
     #time.sleep(0.01)
     
-  def gobackward()
+  def gobackward():
     GPIO.output(dir_pin, False)
     #time.sleep(0.01)
     
-  def take_steps(howManySteps, delayTime)
+  def take_steps(howManySteps, delayTime):
     GPIO.output(step_pin,False)
     GPIO.output(step_pin,True)
     time.sleep(delayTime)

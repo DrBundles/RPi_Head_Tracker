@@ -3,6 +3,7 @@ def motion_detection(frame, avg, text, conf, timestamp):
   import imutils
   import cv2
   import RPi.GPIO as GPIO
+  import pdb
 
   # setup GPIO
   ledPin = 21
@@ -31,11 +32,18 @@ def motion_detection(frame, avg, text, conf, timestamp):
  
   maxArea = 0
 
+  #pdb.set_trace()
+  centroid_x = 0
+  centroid_y = 0
+
   # loop over the contours
   for c in cnts:
     # if the contour is too small, ignore it
     if cv2.contourArea(c) < conf["min_area"]:
+      centroid_x = 0
+      centroid_y = 0
       continue
+
  
     # compute the bounding box for the contour, draw it on the frame,
     # and update the text

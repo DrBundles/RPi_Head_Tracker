@@ -13,14 +13,24 @@ import json
 import time
 import cv2
 import RPi.GPIO as GPIO
+import pdb
 
 from motion_detection import *
+from head_stepper import HeadStepper
 
 # setup GPIO
 ledPin = 21
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(ledPin, GPIO.OUT)
 GPIO.output(ledPin, False)
+
+# setup head_stepper to control head movement
+dirPin = 23
+stepPin = 24
+enablePin = 25
+ms1Pin = 19
+ms2Pin = 26
+head = HeadStepper(dirPin, stepPin, enablePin, ms1Pin, ms2Pin)
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -81,11 +91,15 @@ while True:
   text = "Unoccupied"
   GPIO.output(ledPin, False)
  
-  # Add the motion detectino algorithm here
-  #  motion_detection algorithm 
+  # >>------------ Motion Detection Algorithm -------------------------->>
+  # Motion detection and max area centroid location is calculated
   [frame, text, avg, centroid_x, centroid_y] = motion_detection(frame, avg, text, conf, timestamp)
+  # <<------------ Motion Detection Algorithm --------------------------<<
 
 
+  # >>------------ Stepper Motion Controls ----------------------------->>
+
+  # <<------------ Stepper Motion Controls -----------------------------<<
 
 
 
