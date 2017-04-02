@@ -82,7 +82,8 @@ while True:
   GPIO.output(ledPin, False)
  
   # Add the motion detectino algorithm here
-  [frame, text, avg] = motion_detection(frame, avg, text, conf, timestamp)
+  #  motion_detection algorithm 
+  [frame, text, avg, centroid_x, centroid_y] = motion_detection(frame, avg, text, conf, timestamp)
 
 
 

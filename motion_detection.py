@@ -50,6 +50,7 @@ def motion_detection(frame, avg, text, conf, timestamp):
       M = cv2.moments(c)
       centroid_x = int(M['m10']/M['m00'])
       centroid_y = int(M['m01']/M['m00'])
+      # Draw a green box around largest moving object
       cv2.circle(frame, (centroid_x, centroid_y), 5, (0,0,255), -1)
  
   # draw the text and timestamp on the frame
@@ -59,4 +60,4 @@ def motion_detection(frame, avg, text, conf, timestamp):
   cv2.putText(frame, ts, (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX,
     0.35, (0, 0, 255), 1)
 
-  return [frame, text, avg]
+  return [frame, text, avg, centroid_x, centroid_y]
