@@ -10,6 +10,9 @@ import cv2
 import pdb
 
 from motion_detection import *
+
+# Width of camera frame, i.e. width of displayed picture
+frameWidth = 500
  
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -32,6 +35,12 @@ if conf["use_pi"]:
   rawCapture = PiRGBArray(camera, size=tuple(conf["resolution"]))
 else:
   camera = cv2.VideoCapture(0)
+  #CV_CAP_PROP_FRAME_WIDTH
+  camera.set(3,conf["resolution"][0])
+  #CV_CAP_PROP_FRAME_HEIGHT
+  camera.set(4,conf["resolution"][1])
+  #CV_CAP_PROP_FPS
+  camera.set(5,conf["fps"])
   time.sleep(0.25)
   [grabbed, rawCapture] = camera.read()
 
@@ -53,11 +62,14 @@ while True:
   else:
     (grabbed, frame) = camera.read()
 
+  # Resize the frame
+  frame = imutils.resize(frame, width=frameWidth)
+
   # if the average frame is None, initialize it
   if avg is None:
     print("[INFO] starting background model...")
-    # resize the frame, convert it to grayscale, and blur it
-    frame = imutils.resize(frame, width=500)
+    # Convert the frame to grayscale, and blur it
+    # frame = imutils.resize(frame, width=500)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray = cv2.GaussianBlur(gray, (21, 21), 0)
     avg = gray.copy().astype("float")
