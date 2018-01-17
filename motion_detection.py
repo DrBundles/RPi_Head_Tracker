@@ -2,7 +2,6 @@ def motion_detection(frame, avg, text, conf, timestamp):
 
   import imutils
   import cv2
-  import RPi.GPIO as GPIO
   import pdb
 
   # setup GPIO
@@ -50,7 +49,7 @@ def motion_detection(frame, avg, text, conf, timestamp):
     (x, y, w, h) = cv2.boundingRect(c)
     cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
     text = "Occupied"
-    GPIO.output(ledPin, True)    
+    #GPIO.output(ledPin, True)    
 
     # find the centroid of the largest 
     if maxArea < cv2.contourArea(c): 
